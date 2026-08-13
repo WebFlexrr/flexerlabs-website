@@ -2,12 +2,12 @@ import React from "react";
 
 const BlurredBg = () => {
 	return (
-		<section className="to-background dark absolute top-0 right-0 left-0 h-[120vh] w-full overflow-x-hidden bg-gradient-to-b from-[#002f65]">
-			<section className="relative mx-auto mt-60 w-full max-w-lg">
-				<div className="absolute top-0 -left-3/4 h-16 w-[740px] rotate-[150deg] bg-white blur-[10rem]" />
-				<div className="absolute top-0 -right-3/4 h-16 w-[740px] rotate-[30deg] bg-white blur-[10rem]" />
-			</section>
-		</section>
+		<div className="pointer-events-none absolute top-0 right-0 left-0 -z-10 h-[100vh] w-full overflow-hidden bg-gradient-to-b from-[#001e47]/40 via-[#020817]/80 to-[#020817]">
+			<div className="relative mx-auto h-full w-full max-w-7xl">
+				<div className="absolute top-10 left-1/4 h-72 w-72 rounded-full bg-blue-600/15 blur-[120px]" />
+				<div className="absolute top-20 right-1/4 h-72 w-72 rounded-full bg-indigo-600/15 blur-[120px]" />
+			</div>
+		</div>
 	);
 };
 

@@ -1,6 +1,7 @@
 "use client";
 import React, { type FC } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
+
 interface HeadingProps {
 	heading: string | null;
 	subHeading: string;
@@ -14,43 +15,37 @@ const SectionHeading: FC<HeadingProps> = ({
 	para,
 	align = "center",
 }) => {
+	const alignmentClasses = {
+		left: "items-start text-left",
+		center: "items-center text-center",
+		right: "items-end text-right",
+	};
+
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 50 }}
+			initial={{ opacity: 0, y: 30 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-			className={` ${align === "left" && "items-start"} ${align === "center" && "items-center"} ${align === "right" && "items-end"} mx-auto mt-10 flex h-auto w-full max-w-7xl flex-col gap-4 text-center text-black dark:text-white`}
+			transition={{ duration: 0.6, ease: "easeOut" }}
+			className={`mx-auto flex h-auto w-full max-w-4xl flex-col gap-3.5 ${alignmentClasses[align]}`}
 		>
-			{heading != null ? (
-				<>
-					{/* <span className="text-primary flex gap-3 text-xl font-semibold">
-						<span className="flex h-7 w-7 items-center justify-center rounded-full bg-green-400">
-						<Star size={22} className="fill-background text-green-400" />
-						</span>
-						{heading}
-						</span> */}
-					{/* <span className="from-primary to-secondary flex gap-3 rounded-full bg-gradient-to-r p-0.5"> */}
-					<span className="flex gap-3 rounded-full p-0.5">
-						<div className="bg-background border-secondary rounded-full border px-7 py-3 text-base">
-							{subHeading}
-						</div>
-					</span>
-					<h2 className="font-bold text-black dark:text-white">{heading}</h2>
+			{subHeading && (
+				<span className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-blue-400 uppercase backdrop-blur-md">
+					<span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-400" />
+					{subHeading}
+				</span>
+			)}
 
-					<p className="w-full max-w-lg">{para}</p>
-				</>
-			) : (
-				<>
-					<span className="flex gap-3 rounded-full p-0.5">
-						<div className="bg-background border-secondary rounded-full border px-7 py-3 text-base">
-							{subHeading}
-						</div>
-					</span>
-					<h2 className="text-5xl font-bold text-black dark:text-white">
-						{heading}
-					</h2>
-				</>
+			{heading && (
+				<h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+					{heading}
+				</h2>
+			)}
+
+			{para && (
+				<p className="mt-1 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
+					{para}
+				</p>
 			)}
 		</motion.div>
 	);

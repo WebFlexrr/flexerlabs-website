@@ -1,4 +1,5 @@
-import Heading from "@/components/SectionHeading";
+"use client";
+import SectionHeading from "@/components/SectionHeading";
 import React from "react";
 import {
 	Accordion,
@@ -6,78 +7,85 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { HelpCircle } from "lucide-react";
 
 const FaqSection = () => {
 	const FAQ = [
 		{
 			key: 1,
 			title: "How long does it take to complete a project?",
-			answer: `It's completely based on that specific Project requirements. Rest assured, we prioritize efficiency without compromising quality to deliver your website in a timely manner.`,
+			answer:
+				"Project timelines depend on the scope and complexity. A custom high-converting landing page typically takes 1 to 2 weeks, while full-stack web applications and SaaS MVPs range between 3 to 6 weeks. We work in rapid, transparent sprint cycles with weekly milestones.",
 		},
 		{
 			key: 2,
-			title: "Do you offer ongoing support and maintenance services?",
-			answer: `Yes, we offer support to keep your website up-to-date. Our team is available for updates, security checks, troubleshooting, and enhancements as needed.And `,
+			title: "Do you offer ongoing support and maintenance?",
+			answer:
+				"Yes, we provide flexible monthly maintenance and retainer plans. Our services include 24/7 uptime monitoring, security patching, dependency upgrades, performance tuning, and continuous feature updates.",
 		},
 		{
 			key: 3,
-			title: "What happens if I'm not satisfied with the final result?",
-			answer: `Your satisfaction is important to us. We'll work closely with you to address any concerns and make revisions until you're happy with the outcome.`,
+			title: "What happens if we need revisions or design iterations?",
+			answer:
+				"Your satisfaction is our highest priority. We include structured review checkpoints throughout the design and development phases, allowing you to give actionable feedback until the finished product matches your vision perfectly.",
 		},
-
 		{
 			key: 4,
-			title: "How does your process work?",
-			answer: `I begin by understanding your needs and goals, then create a detailed plan. I handle both design and development, progressing through structured stages—design, development, testing, and final launch—to ensure a seamless outcome.`,
+			title: "How does your development process work?",
+			answer:
+				"We follow a proven 5-stage sprint methodology: (1) Discovery & Strategy, (2) Wireframing & UX Architecture, (3) High-Fidelity UI Design & Prototyping, (4) Production Next.js/React Engineering, and (5) Rigorous QA, SEO Tuning, & Secure Deployment.",
 		},
-
 		{
 			key: 5,
-			title: "How long does it take to receive designs or prototypes?",
-			answer: `Timelines vary based on the project scope. I provide regular updates and prototypes, giving you a clear view of progress and allowing for timely feedback.`,
+			title: "Can you build apps using No-Code platforms as well?",
+			answer:
+				"Yes! While our primary expertise is custom full-stack code (Next.js, React, Node.js), we also build high-speed solutions using modern no-code/low-code tools such as Framer, Webflow, and Supabase when speed-to-market is the top priority.",
 		},
 		{
 			key: 6,
-			title: "You can make apps using No-code?",
-			answer: `We use both coded and no-coded platform for developement. But we prefer coded website or mobile apps for developement. If you want then we can.  `,
-		},
-
-		{
-			key: 7,
-			title: "What's your Tech Stack?",
-			answer: `We primarily use React and Next.js for front-end development, with Node.js for back-end work and MongoDB, PostgresSQL and Firebase for databases. For styling, I prefer tailwindcss and sometimes leverage CSS frameworks as needed. I handle animations with Framer motion, and manage user authentication and data storage with Firebase or Supabase.For Payment processing, I will prefer client's choice but my preference is Stripe and use GitHub for version control. This stack allows me to build responsive, scalable, and maintainable applications tailored to your project's requirements.`,
+			title: "What is your primary technology stack?",
+			answer:
+				"We build with industry-leading modern technologies: Next.js 15, React 19, TypeScript, and Tailwind CSS for the frontend; Node.js, Python, PostgreSQL, MongoDB, and Redis for backends; and Framer Motion for smooth micro-animations.",
 		},
 	];
+
 	return (
-		<section id={"faq"} className="bg-background relative h-auto w-full">
-			<section className="mx-auto flex w-full max-w-4xl flex-col gap-14 px-5 py-20">
-				<Heading
-					heading={"FAQ"}
-					subHeading={"Frequently Asked Questions ?"}
-					para="Here are some commonly asked questions. If you can't find the answer you're looking for, feel free to reach out to us directly. We're here to help!"
+		<section
+			id="faq"
+			className="relative w-full overflow-hidden bg-[#020817] py-20 lg:py-28"
+		>
+			{/* Ambient glow */}
+			<div className="pointer-events-none absolute top-1/2 right-1/2 -z-10 h-[500px] w-[600px] translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/5 blur-[120px]" />
+
+			<div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-12 px-4 sm:px-6 lg:px-8">
+				<SectionHeading
+					subHeading="Frequently Asked Questions"
+					heading="Everything You Need to Know"
+					para="Have questions about our process, timeline, or technologies? We've answered the most common ones below."
 				/>
-				<section className="relative h-auto w-full">
-					<Accordion type="single" collapsible className="space-y-3">
+
+				<div className="w-full">
+					<Accordion type="single" collapsible className="space-y-4">
 						{FAQ.map((faq, index) => (
 							<AccordionItem
 								key={faq.key}
 								value={`item-${index}`}
-								// indicator={<PlusCircle />}
-								aria-label={faq.title}
-								className="font-space-grotesk bg-background my-2 rounded-lg border px-5 text-left text-lg font-medium text-white antialiased"
+								className="rounded-2xl border border-white/10 bg-slate-900/50 px-6 py-1 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/30 data-[state=open]:border-blue-500/50 data-[state=open]:bg-slate-900/80"
 							>
-								<AccordionTrigger>
-									<h5>{faq.title}</h5>
+								<AccordionTrigger className="py-5 text-left text-base font-semibold text-white hover:text-blue-400 hover:no-underline sm:text-lg">
+									<div className="flex items-center gap-3">
+										<HelpCircle className="h-5 w-5 shrink-0 text-blue-400 opacity-75" />
+										<span>{faq.title}</span>
+									</div>
 								</AccordionTrigger>
-								<AccordionContent className="text-inter text-base text-black dark:text-white">
+								<AccordionContent className="pt-1 pb-5 pl-8 text-sm leading-relaxed text-slate-300 sm:text-base">
 									{faq.answer}
 								</AccordionContent>
-								{/* <Divider className="mb-3" /> */}
 							</AccordionItem>
 						))}
 					</Accordion>
-				</section>
-			</section>
+				</div>
+			</div>
 		</section>
 	);
 };

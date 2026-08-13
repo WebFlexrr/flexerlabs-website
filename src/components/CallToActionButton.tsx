@@ -6,6 +6,15 @@ import Link from "next/link";
 import { motion } from "motion/react";
 
 export const CallToActionButton = () => {
+	const handleButtonClick = async () => {
+		// Track a custom event
+		const ReactPixel = (await import("react-facebook-pixel")).default;
+		ReactPixel.track("Lead", {
+			content_name: "Contact Form",
+			content_category: "Website Inquiry",
+			value: 10.0,
+		});
+	};
 	return (
 		<motion.div
 			initial={{ scale: 1 }}
@@ -21,7 +30,10 @@ export const CallToActionButton = () => {
 				className="group cursor-pointer transition-all duration-500 ease-in-out"
 			>
 				{/* <Button className="border-secondary from-primary to-secondary font-space-grotesk gap-5 rounded-2xl border bg-linear-to-r px-5 py-6 text-lg text-white"> */}
-				<Button className="border-secondary hover:bg-secondary bg-primary font-space-grotesk gap-5 rounded-full border px-5 py-6 text-lg text-white transition-all duration-300 ease-in-out">
+				<Button
+					onClick={() => handleButtonClick()}
+					className="border-secondary hover:bg-secondary bg-primary font-space-grotesk gap-5 rounded-full border px-5 py-6 text-lg text-white transition-all duration-300 ease-in-out"
+				>
 					Book A Free Consultation{" "}
 					<div className="flex items-center justify-center rounded-md border border-white p-2">
 						<CiLocationArrow1 className="fill-white text-lg" />
@@ -33,6 +45,15 @@ export const CallToActionButton = () => {
 };
 
 export const ContactUsButton = () => {
+	const handleButtonClick = async () => {
+		// Track a custom event
+		const ReactPixel = (await import("react-facebook-pixel")).default;
+		ReactPixel.track("Lead", {
+			content_name: "Contact Form",
+			content_category: "Website Inquiry",
+			value: 10.0,
+		});
+	};
 	return (
 		<motion.div
 			initial={{ scale: 1 }}
@@ -48,7 +69,10 @@ export const ContactUsButton = () => {
 				className="hidden md:flex"
 			>
 				{/* <Button className="border-secondary from-primary to-secondary font-space-grotesk flex h-10 items-center justify-center gap-5 rounded-2xl border bg-linear-to-r text-base text-white"> */}
-				<Button className="border-secondary bg-secondary font-space-grotesk flex h-10 items-center justify-center gap-5 rounded-2xl border text-base text-white transition-all duration-500">
+				<Button
+					onClick={() => handleButtonClick()}
+					className="border-secondary bg-secondary font-space-grotesk flex h-10 items-center justify-center gap-5 rounded-2xl border text-base text-white transition-all duration-500"
+				>
 					Book free Consultation
 				</Button>
 			</Link>

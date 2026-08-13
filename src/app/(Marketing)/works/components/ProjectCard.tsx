@@ -1,11 +1,9 @@
 "use client";
+import React, { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC } from "react";
-import { MdOutlineArrowOutward } from "react-icons/md";
-
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 interface ProjectCardProps {
 	thumbnail?: string;
@@ -21,127 +19,90 @@ const ProjectCard: FC<ProjectCardProps> = ({
 	thumbnail = "",
 	title,
 	description,
-	link,
 	tags,
 	slug,
 	index = 0,
 }) => {
+	const destination = slug ? `/works/${slug}` : "#";
+
 	return (
-		<Link href={`/works/${slug}`}>
-			<motion.div
-				initial={{ opacity: 0, y: 100 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				viewport={{ once: true }}
-				transition={{
-					duration: 0.5,
-					delay: index * 0.2,
-					type: "tween",
-					ease: "easeOut",
-				}}
+		<motion.div
+			layout
+			initial={{ opacity: 0, y: 30 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, scale: 0.95 }}
+			transition={{
+				duration: 0.4,
+				delay: Math.min(index * 0.08, 0.4),
+				ease: "easeOut",
+			}}
+			className="h-full"
+		>
+			<Link
+				href={destination}
+				className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 p-4 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/80 hover:shadow-2xl hover:shadow-blue-500/10 sm:p-5"
 			>
-				{/* <Card className="mx-auto h-fit w-full max-w-4xl border border-white overflow-hidden rounded-3xl border border-white/[0.05] bg-[#0A0A0B]/70 backdrop-blur-xl"> */}
-				<Card className="mx-auto h-fit w-full max-w-4xl overflow-hidden rounded-3xl border-none bg-transparent pt-0 shadow-none">
-					{/* <div className="from-primary/10 to-secondary/10 absolute inset-0 bg-gradient-to-br via-transparent" /> */}
-					<CardHeader className="rounded-lg p-0">
-						<motion.section
-							className="w-full"
-							whileHover={{ scale: 1.02 }}
-							transition={{ duration: 0.2 }}
-						>
-							<Image
-								alt={title ?? ""}
-								className="aspect-4/3 w-full rounded-2xl object-cover shadow-lg ring-1 ring-white/10"
-								src={thumbnail}
-								width={1000}
-								height={0}
-							/>
-						</motion.section>
-					</CardHeader>
-					<CardContent className="relative z-10 h-full w-full lg:px-5">
-						<section className="flex h-full w-full flex-col items-stretch justify-between gap-7">
-							<section className="flex flex-col gap-4">
-								{tags && (
-									<motion.section
-										initial={{ opacity: 0, y: 20 }}
-										animate={{ opacity: 1, y: 0 }}
-										transition={{ duration: 0.3, delay: 0.4 }}
-										className="flex w-full flex-wrap gap-3"
-									>
-										{tags.map((tag) => (
-											<span
-												key={tag}
-												className="w-fit rounded-full bg-white/[0.05] px-3 py-1.5 text-sm backdrop-blur-lg"
-											>
-												{tag}
-											</span>
-										))}
+				{/* Top Image Preview Container */}
+				<div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-950">
+					{thumbnail ? (
+						<Image
+							alt={title ?? "Project Thumbnail"}
+							src={thumbnail}
+							fill
+							unoptimized
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+							className="object-cover transition-transform duration-500 group-hover:scale-105"
+						/>
+					) : (
+						<div className="flex h-full w-full items-center justify-center bg-slate-800 text-slate-500">
+							No Preview
+						</div>
+					)}
+					<div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
+				</div>
 
-										{/* <span className="w-fit rounded-lg bg-blue-500/10 px-3 py-1.5 text-sm text-blue-400 backdrop-blur-lg">
-										Business
-										</span> */}
-									</motion.section>
-								)}
-							</section>
-							<section className="flex flex-col items-start gap-3">
-								<motion.h5
-									initial={{ opacity: 0, x: -20 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{ duration: 0.3, delay: 0.2 }}
-									className="text-left font-semibold text-white"
-								>
-									{title}
-								</motion.h5>
-								<motion.p
-									initial={{ opacity: 0, x: -20 }}
-									animate={{ opacity: 1, x: 0 }}
-									transition={{ duration: 0.3, delay: 0.3 }}
-									className="text-sm text-gray-400"
-								>
-									{description}
-								</motion.p>
-							</section>
-							<section className="flex flex-col gap-4">
-								{/* {tags && (
-										<motion.section
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ duration: 0.3, delay: 0.4 }}
-											className="flex w-full gap-3"
-										>
-											{tags.map((tag) => (
-												<span
-													key={tag}
-													className="w-fit rounded-full bg-white/[0.05] px-3 py-1.5 text-sm backdrop-blur-lg"
-												>
-													{tag}
-												</span>
-											))}
-
-											{/* <span className="w-fit rounded-lg bg-blue-500/10 px-3 py-1.5 text-sm text-blue-400 backdrop-blur-lg">
-										Business
-										</span> 
-										</motion.section>
-									)} */}
-								{link && (
-									<motion.div
-										whileHover={{ scale: 1.02 }}
-										transition={{ duration: 0.2 }}
+				{/* Card Body Content */}
+				<div className="flex flex-1 flex-col justify-between pt-5">
+					<div className="space-y-3">
+						{/* Tags */}
+						{tags && tags.length > 0 && (
+							<div className="flex flex-wrap gap-2">
+								{tags.map((tag) => (
+									<span
+										key={tag}
+										className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-0.5 text-xs font-semibold text-blue-300 backdrop-blur-md"
 									>
-										<Link
-											// href={`/works/${slug}`}
-											href={link}
-											className="from-primary to-secondary flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r p-3 text-sm font-medium text-white transition-all hover:gap-3"
-										>
-											View Project <MdOutlineArrowOutward size={20} />
-										</Link>
-									</motion.div>
-								)}
-							</section>
-						</section>
-					</CardContent>
-				</Card>
-			</motion.div>
-		</Link>
+										{tag}
+									</span>
+								))}
+							</div>
+						)}
+
+						{/* Title */}
+						<h3 className="text-xl font-bold tracking-tight text-white transition-colors group-hover:text-blue-300">
+							{title}
+						</h3>
+
+						{/* Description */}
+						{description && (
+							<p className="line-clamp-2 text-sm leading-relaxed text-slate-300">
+								{description}
+							</p>
+						)}
+					</div>
+
+					{/* Card Footer Button */}
+					<div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+						<span className="text-xs font-semibold tracking-wider text-slate-400 uppercase transition-colors group-hover:text-blue-400">
+							View Case Study
+						</span>
+						<div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition-all duration-300 group-hover:rotate-45 group-hover:border-blue-500/50 group-hover:bg-blue-600 group-hover:text-white">
+							<ArrowUpRight className="h-4 w-4" />
+						</div>
+					</div>
+				</div>
+			</Link>
+		</motion.div>
 	);
 };
 

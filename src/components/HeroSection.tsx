@@ -1,62 +1,56 @@
 "use client";
 import React, { FC } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
 	pillText: string;
 	title: string;
-
 	tagline?: string;
 }
 
 const HeroSection: FC<HeroSectionProps> = ({ pillText, title, tagline }) => {
 	return (
-		<section className="dark relative flex h-auto w-full flex-col items-center justify-center pt-20 lg:pt-25">
-			<div className="bg-background absolute -z-10 h-full w-full"></div>
-			<div
-				className={cn(
-					"absolute inset-0 z-0",
-					"[background-size:60px_60px]",
-					// "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-					// "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-					"dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
-				)}
-			/>
-			{/* Radial gradient for the container to give a faded look */}
-			<section className="z-10 mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
-				<motion.span
-					initial={{ opacity: 0, y: 40 }}
+		<section className="relative flex min-h-[45vh] w-full flex-col items-center justify-center overflow-hidden bg-[#020817] pt-32 pb-14 text-white sm:pt-36 sm:pb-16">
+			{/* Ambient background glows */}
+			<div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[450px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-blue-600/15 via-indigo-500/15 to-purple-600/10 blur-[130px]" />
+
+			{/* Subtle grid overlay */}
+			<div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+			<div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
+				{/* Top Pill Badge */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, ease: "easeInOut" }}
-					className="flex gap-3 rounded-full p-0.5"
+					transition={{ duration: 0.5 }}
+					className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-blue-400 uppercase shadow-lg shadow-blue-500/10 backdrop-blur-xl sm:text-sm"
 				>
-					<div className="bg-background border-secondary flex items-center gap-5 rounded-full border px-6 py-2.5 text-lg text-white lg:px-7 lg:py-3 lg:text-xl">
-						<div className="relative h-2 w-2 rounded-full">
-							<span className="bg-primary absolute h-2.5 w-2.5 animate-ping rounded-full"></span>
-						</div>
-						{pillText}
-					</div>
-				</motion.span>
+					<span className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+					{pillText}
+				</motion.div>
+
+				{/* Title */}
 				<motion.h1
-					initial={{ opacity: 0, y: 40 }}
+					initial={{ opacity: 0, y: 25 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.1, ease: "easeInOut" }}
-					className="mt-4 text-center text-3xl font-bold text-white md:text-5xl lg:mt-10 lg:text-6xl"
+					transition={{ duration: 0.6, delay: 0.1 }}
+					className="mt-6 max-w-4xl text-3xl leading-[1.15] font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl"
 				>
 					{title}
 				</motion.h1>
+
+				{/* Tagline */}
 				{tagline && (
 					<motion.p
-						initial={{ opacity: 0, y: 40 }}
+						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 0.2, ease: "easeInOut" }}
-						className="mt-6 max-w-2xl text-lg text-gray-300 md:text-xl"
+						transition={{ duration: 0.6, delay: 0.2 }}
+						className="mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg"
 					>
 						{tagline}
 					</motion.p>
 				)}
-			</section>
+			</div>
 		</section>
 	);
 };

@@ -1,16 +1,10 @@
 import React from "react";
-// import ProjectCard from "@/components/ProjectCard";
 import BlurredBg from "@/components/BlurredBg";
-// import { imageUrlFor } from "@/sanity/config/SanityImageUrl";
-// import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-// import { getWorkPageMetadata } from "@/sanity/actions/metadataQueryActions";
 import { getProjects } from "@/sanity/actions/queryActions";
 import CallToActionBanner from "@/components/CallToActionBanner";
-// import { HeroSection } from "./components/HeroSection";
 import { ProjectsGrid } from "./components/ProjectsGrid";
-
 import Footer2 from "@/components/Footer2";
-import NavBar2 from "@/components/Navbar";
+import NavBar from "@/components/Navbar";
 import { getWorkPageMetadata } from "@/sanity/actions/metadataQueryActions";
 import { Metadata } from "next";
 import { imageUrlFor } from "@/sanity/config/SanityImageUrl";
@@ -21,11 +15,13 @@ export async function generateMetadata(): Promise<Metadata> {
 	const workPage = await getWorkPageMetadata();
 
 	return {
-		title: workPage.seo?.metaTitle,
-		description: workPage.seo?.metaDescription,
+		title: workPage.seo?.metaTitle || "Our Portfolio | Webflexrr Labs",
+		description:
+			workPage.seo?.metaDescription ||
+			"Explore our case studies in Web Development, SaaS Platforms, Mobile Apps, and AI Automations.",
 		keywords: workPage.seo?.seoKeywords,
 		openGraph: {
-			title: workPage.seo?.openGraph?.title,
+			title: workPage.seo?.openGraph?.title || "Webflexrr Labs Portfolio",
 			description: workPage.seo?.openGraph?.description,
 			url: workPage.seo?.openGraph?.url,
 			siteName: workPage.seo?.openGraph?.siteName,
@@ -37,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 							).url(),
 							width: 1200,
 							height: 630,
-							alt: workPage.seo?.metaTitle || "Project Image",
+							alt: workPage.seo?.metaTitle || "Webflexrr Portfolio",
 						},
 					]
 				: [],
@@ -48,23 +44,25 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Works() {
 	const projects = await getProjects();
 
+	const projectsWithThumbnails = projects.map((project) => ({
+		...project,
+		thumbnailUrl: project.thumbnail
+			? imageUrlFor(project.thumbnail as SanityImageSource).url()
+			: "",
+	}));
+
 	return (
-		<main className="bg-background dark h-fit p-0">
+		<main className="relative min-h-screen w-full overflow-x-hidden bg-[#020817] p-0 text-white">
 			<BlurredBg />
-			{/* <AnnouncementBar /> */}
-			<NavBar2 />
+			<NavBar />
 			{/* Hero Section */}
 			<HeroSection
-				pillText={"Portfolio"}
-				title={"Webflexrr Lab's Diverse Portfolio of Creative Brilliance"}
-				// description={
-				// 	"Explore Our portfolio, a testament to our commitment to creative brilliance. From captivating web designs to Robust Applications."
-				// }
+				pillText="Case Studies & Portfolio"
+				title="Our Diverse Portfolio of Digital Excellence"
+				tagline="Explore our proven track record of custom SaaS platforms, high-converting landing pages, mobile apps, and enterprise AI integrations."
 			/>
-			{/* <HeroSection /> */}
-			{/* <FilterCategories /> */}
-			<ProjectsGrid projects={projects} />
-			{/* <CTASection /> */}
+			{/* Interactive Category Filter & Projects Grid */}
+			<ProjectsGrid projects={projectsWithThumbnails} />
 
 			<CallToActionBanner />
 			<Footer2 />

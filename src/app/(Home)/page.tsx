@@ -3,8 +3,6 @@ import Services from "./components/Services";
 import BlurredBg from "@/components/BlurredBg";
 import ProjectsSection from "./components/ProjectsSection";
 import FaqSection from "./components/FaqSection";
-// import ClientFeedBack from "./components/ClientFeedBack";
-// import Footer from "@/components/Footer";
 import CallToActionBanner from "../../components/CallToActionBanner";
 import ContactSection from "./components/ContactSection";
 import SmoothScrolling from "@/components/SmoothScrolling";
@@ -21,14 +19,6 @@ import NavBar from "@/components/Navbar";
 export async function generateMetadata(): Promise<Metadata> {
 	const homePage = await getHomePageMetadata();
 
-	console.log(homePage);
-
-	// console.log(
-	// 	"Open graph Image",
-	// 	imageUrlFor(homePage.seo?.openGraph?.image as SanityImageSource)
-	// 		.blur(50)
-	// 		.url()
-	// );
 	return {
 		title: `Webflexrr Labs- ${homePage.seo?.metaTitle}`,
 		description: homePage.seo?.metaDescription,
@@ -55,20 +45,15 @@ export async function generateMetadata(): Promise<Metadata> {
 const HomePage = async () => {
 	return (
 		<SmoothScrolling>
-			<main className="h-fit p-0">
+			<main className="relative min-h-screen w-full overflow-x-hidden bg-[#020817] p-0 text-white">
 				<BlurredBg />
-				{/* <AnnouncementBar /> */}
 				<NavBar />
-				{/* <NavbarDemo/> */}
 				<HeroSection />
 				<AboutSection />
 				<IconsCarousal />
 				<Services />
 				<ProjectsSection />
-				{/* <PlanSection /> */}
 				<FaqSection />
-				{/* <ClientFeedBack /> */}
-				{/* <GridSmallBackgroundDemo/> */}
 				<BlogSection />
 				<CallToActionBanner />
 				<ContactSection />

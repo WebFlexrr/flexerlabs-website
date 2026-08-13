@@ -1,47 +1,122 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { CallToActionButton } from "@/components/CallToActionButton";
+import { motion } from "framer-motion";
+import { CheckCircle2, Zap, Award, Sparkles } from "lucide-react";
 
 const AboutSection = () => {
+	const keyHighlights = [
+		"Conversion-optimized UI/UX design architecture",
+		"Production-ready Next.js & React engineering",
+		"Sub-second loading speeds and SEO dominance",
+		"Transparent, agile sprint communication",
+	];
+
 	return (
-		<section className="dark relative w-full bg-[#020817] py-20">
-			{/* Gradient overlays */}
-			<div className="absolute inset-0">
-				<div className="absolute inset-0 bg-gradient-to-r opacity-20 blur-3xl" />
-				<div className="via-background/10 to-background absolute inset-0 bg-gradient-to-b from-transparent" />
-			</div>
+		<section className="relative w-full overflow-hidden bg-[#020817] py-20 lg:py-28">
+			{/* Ambient background glow */}
+			<div className="pointer-events-none absolute top-1/2 left-0 -z-10 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-blue-600/10 blur-[120px]" />
+			<div className="pointer-events-none absolute top-1/2 right-0 -z-10 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
 
-			<section className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-8 px-5 md:flex-row">
-				<div className="w-full md:w-1/2">
-					<Image
-						src="/assets/about.png"
-						alt="Team of professionals"
-						width={600}
-						height={400}
-						className="rounded-lg"
-					/>
-				</div>
+			<div className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-4 sm:px-6 lg:flex-row lg:gap-16 lg:px-8">
+				{/* Image Column with Glass Framing */}
+				<motion.div
+					initial={{ opacity: 0, x: -40 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					viewport={{ once: true }}
+					transition={{ duration: 0.6 }}
+					className="relative w-full lg:w-1/2"
+				>
+					<div className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 p-2 shadow-2xl backdrop-blur-xl sm:p-3">
+						<div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+							<Image
+								src="/assets/about.png"
+								alt="Webflexrr Labs Team"
+								fill
+								sizes="(max-width: 1024px) 100vw, 50vw"
+								className="object-cover transition-transform duration-700 hover:scale-105"
+							/>
+						</div>
 
-				<div className="w-full space-y-6 md:w-1/2">
-					<span className="font-medium text-blue-500">About US</span>
+						{/* Floating highlight card 1 */}
+						<div className="absolute -right-2 -bottom-2 flex items-center gap-3 rounded-2xl border border-white/15 bg-slate-900/90 px-4 py-3 shadow-2xl backdrop-blur-xl sm:right-6 sm:bottom-6">
+							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400">
+								<Zap className="h-5 w-5" />
+							</div>
+							<div>
+								<div className="text-xs font-semibold text-slate-300">
+									Fast Turnaround
+								</div>
+								<div className="text-sm font-bold text-white">
+									MVP in 2–4 Weeks
+								</div>
+							</div>
+						</div>
 
-					<h2 className="text-4xl font-bold text-white">
-						Our Best Offering for new Statups
+						{/* Floating highlight card 2 */}
+						<div className="absolute -top-2 -left-2 hidden items-center gap-3 rounded-2xl border border-white/15 bg-slate-900/90 px-4 py-3 shadow-2xl backdrop-blur-xl sm:top-6 sm:left-6 sm:flex">
+							<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+								<Award className="h-5 w-5" />
+							</div>
+							<div>
+								<div className="text-xs font-semibold text-slate-300">
+									Satisfaction
+								</div>
+								<div className="text-sm font-bold text-white">
+									100% Client Focus
+								</div>
+							</div>
+						</div>
+					</div>
+				</motion.div>
+
+				{/* Content Column */}
+				<motion.div
+					initial={{ opacity: 0, x: 40 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					viewport={{ once: true }}
+					transition={{ duration: 0.6 }}
+					className="flex w-full flex-col items-start space-y-6 lg:w-1/2"
+				>
+					<span className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-blue-400 uppercase">
+						<Sparkles className="h-3.5 w-3.5" />
+						About Webflexrr Labs
+					</span>
+
+					<h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+						Our Best Offering for{" "}
+						<span className="bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">
+							Modern Startups
+						</span>
 					</h2>
 
-					<p className="leading-relaxed text-gray-300">
-						Webflexrr Labs is a cutting-edge digital agency specializing in
-						high-performance Landing Page and Web App Development. We help
-						startups, small businesses, and enterprises build scalable,
-						conversion-focused solutions. With a focus on innovation and user
-						experience, we craft tailored web solutions that drive growth and
-						success in the digital world.
+					<p className="text-base leading-relaxed text-slate-300 sm:text-lg">
+						Webflexrr Labs is a specialized digital agency crafting
+						high-performance Landing Pages, Web Apps, and AI Solutions. We
+						partner with ambitious founders to engineer scalable,
+						high-converting digital experiences that turn visitors into loyal
+						customers.
 					</p>
-					<div className="w-full">
+
+					{/* Highlights checklist */}
+					<div className="grid w-full grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
+						{keyHighlights.map((item, i) => (
+							<div
+								key={i}
+								className="flex items-center gap-2.5 text-sm text-slate-200"
+							>
+								<CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+								<span>{item}</span>
+							</div>
+						))}
+					</div>
+
+					<div className="pt-4">
 						<CallToActionButton />
 					</div>
-				</div>
-			</section>
+				</motion.div>
+			</div>
 		</section>
 	);
 };

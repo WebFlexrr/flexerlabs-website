@@ -1,99 +1,38 @@
 "use client";
 import React from "react";
-import Heading from "@/components/SectionHeading";
+import SectionHeading from "@/components/SectionHeading";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { services } from "@/db/services";
+import { ArrowUpRight, Check } from "lucide-react";
 
-// const services = [
-// 	{
-// 		title: "Landing Page Websites",
-// 		description:
-// 			"We ensure your website ranks higher through advanced SEO strategies, driving organic traffic and improving visibility.",
-// 		icon: <PanelsTopLeft className="h-8 w-8 text-blue-400" />,
-// 		list: [
-// 			"Advanced SEO & content optimization",
-// 			"Conversion-focused landing pages",
-// 			"Fast, mobile-friendly design",
-// 		],
-// 		// gradient: "from-blue-500/10 via-transparent to-transparent",
-// 		gradient: "from-blue-500/70 via-transparent to-transparent",
-// 	},
-// 	{
-// 		title: "App Development",
-// 		description:
-// 			"Build high-performance, scalable, and visually appealing digital products that drive engagement and conversions.",
-// 		icon: <IoLogoAndroid className="h-8 w-8 text-green-400" />,
-// 		list: [
-// 			"Custom web & mobile app development",
-// 			"Secure, high-performance architecture",
-// 			"Cross-platform compatibility",
-// 		],
-// 		// gradient: "from-green-500/10 via-transparent to-transparent",
-// 		gradient: "from-green-500/30 via-transparent to-transparent",
-// 	},
-// 	{
-// 		title: "UI/UX Design",
-// 		description:
-// 			"Craft beautiful, intuitive, and conversion-driven designs that enhance user experience and boost engagement.",
-// 		icon: <BsTypeH1 className="h-8 w-8 text-purple-400" />,
-// 		list: [
-// 			"Wireframing & interactive prototyping",
-// 			"Web & mobile app UI/UX design",
-// 			"A/B testing for performance optimization",
-// 		],
-// 		// gradient: "from-purple-500/10 via-transparent to-transparent",
-// 		gradient: "from-purple-500/70 via-transparent to-transparent",
-// 	},
-// 	{
-// 		title: "AI Automation",
-// 		description:
-// 			"Leverage artificial intelligence to automate processes, reduce costs, and enhance efficiency.",
-// 		icon: <BsTypeH1 className="h-8 w-8 text-purple-400" />,
-// 		list: [
-// 			"AI chatbots & virtual assistants",
-// 			"Workflow & task automation",
-// 			"Predictive analytics for decision-making",
-// 		],
-// 		gradient: "from-purple-500/10 via-transparent to-transparent",
-// 	},
-// 	{
-// 		title: "Cloud & DevOps Services",
-// 		description:
-// 			"Deploy, scale, and manage your applications effortlessly with cloud and DevOps solutions.",
-// 		icon: <BsTypeH1 className="h-8 w-8 text-purple-400" />,
-// 		list: [
-// 			"Cloud migration & infrastructure setup.",
-// 			"CI/CD pipelines for seamless deployments",
-// 			"Serverless & containerized solutions (Docker, Kubernetes)",
-// 		],
-// 		gradient: "from-purple-500/10 via-transparent to-transparent",
-// 	},
-// ];
+import { services } from "@/db/services";
+import Link from "next/link";
 
 const Services = () => {
 	return (
-		<section className="bg-background w-full py-20 md:py-20">
-			<section className="mx-auto w-full max-w-7xl px-5">
-				<Heading
-					heading="How We help Brands?"
+		<section
+			id="services"
+			className="relative w-full overflow-hidden bg-[#020817] py-20 lg:py-28"
+		>
+			{/* Ambient background glows */}
+			<div className="pointer-events-none absolute top-1/3 left-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-blue-600/5 blur-[140px]" />
+
+			<div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+				<SectionHeading
 					subHeading="Our Services"
-					para="Empowering startups with innovative solutions and strategic insights to accelerate growth and success."
+					heading="How We Help Brands Grow"
+					para="Empowering startups and forward-thinking businesses with battle-tested digital engineering, high-converting design, and intelligent AI automation."
 				/>
 
-				<div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div className="mt-16 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 					{services.map((service, index) => (
 						<motion.div
 							key={service.title}
-							initial={{ opacity: 0, y: 100 }}
+							initial={{ opacity: 0, y: 30 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
 							transition={{
 								duration: 0.5,
-								delay: index * 0.2,
-								type: "tween",
+								delay: index * 0.1,
 								ease: "easeOut",
 							}}
 							className="h-full w-full"
@@ -101,14 +40,15 @@ const Services = () => {
 							<ServicesCard
 								title={service.title}
 								description={service.tagline}
-								list={service.features}
+								features={service.features}
 								gradient={service.gradient}
 								icon={service.icon}
+								slug={service.slug}
 							/>
 						</motion.div>
 					))}
 				</div>
-			</section>
+			</div>
 		</section>
 	);
 };
@@ -120,53 +60,75 @@ const ServicesCard = ({
 	description,
 	icon,
 	gradient,
-	list,
+	features,
+	slug,
 }: {
 	title: string;
 	description: string;
 	icon: React.JSX.Element;
-	list: string[];
+	features: string[];
 	gradient: string;
+	slug: string;
 }) => {
 	return (
-		<Card className="group shadow-primary/55 bg-background/40 relative h-full w-full overflow-hidden rounded-3xl border border-white/30 shadow-2xl backdrop-blur-xl">
-			{/* Gradient Background */}
+		<div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 p-6 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/80 hover:shadow-2xl hover:shadow-blue-500/10 sm:p-7">
+			{/* Ambient card gradient */}
 			<div
-				className={`absolute inset-0 bg-gradient-to-br opacity-100 transition-opacity duration-500 group-hover:opacity-80 ${gradient}`}
+				className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${gradient} opacity-40 transition-opacity duration-500 group-hover:opacity-70`}
 			/>
 
-			{/* Content */}
-			<CardHeader className="relative z-10 flex flex-col items-start gap-3 p-6">
-				<motion.div
-					whileHover={{ scale: 1.05 }}
-					transition={{ duration: 0.2 }}
-					className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.05] backdrop-blur-lg"
-				>
-					{icon}
-				</motion.div>
-				<div className="mt-4 flex flex-col items-start gap-2">
-					<h5 className="text-2xl font-semibold">{title}</h5>
-					<p className="">{description}</p>
-				</div>
-			</CardHeader>
-
-			<Separator className="opacity-10" />
-
-			<CardContent className="relative z-10 flex flex-col gap-3 p-6">
-				{list.map((item) => (
-					<motion.div
-						key={item}
-						className="flex items-center gap-3"
-						whileHover={{ x: 5 }}
-						transition={{ duration: 0.2 }}
+			<div className="relative z-10">
+				{/* Top icon and link badge */}
+				<div className="flex items-center justify-between">
+					<div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-inner backdrop-blur-md transition-transform duration-300 group-hover:scale-105 group-hover:border-blue-500/30">
+						{icon}
+					</div>
+					<Link
+						href={`/services/${slug}`}
+						className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-400 opacity-0 transition-all duration-300 group-hover:border-blue-500/40 group-hover:text-white group-hover:opacity-100 hover:border-blue-600 hover:bg-blue-600"
+						aria-label={`Learn more about ${title}`}
 					>
-						<span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/[0.05] backdrop-blur-lg">
-							<Check size={12} className="text-blue-400" />
-						</span>
-						<p className="text-sm text-gray-400">{item}</p>
-					</motion.div>
-				))}
-			</CardContent>
-		</Card>
+						<ArrowUpRight className="h-4 w-4" />
+					</Link>
+				</div>
+
+				{/* Title and description */}
+				<div className="mt-6 space-y-2">
+					<h3 className="text-xl font-bold tracking-tight text-white transition-colors group-hover:text-blue-200">
+						{title}
+					</h3>
+					<p className="text-sm leading-relaxed text-slate-300">
+						{description}
+					</p>
+				</div>
+
+				<div className="my-5 h-px w-full bg-white/10" />
+
+				{/* Features list */}
+				<ul className="space-y-2.5">
+					{features.slice(0, 5).map((item, idx) => (
+						<li
+							key={idx}
+							className="flex items-start gap-2.5 text-xs text-slate-300 sm:text-sm"
+						>
+							<span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-400">
+								<Check className="h-2.5 w-2.5 stroke-[3]" />
+							</span>
+							<span>{item}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<div className="relative z-10 mt-6 pt-2">
+				<Link
+					href={`/services/${slug}`}
+					className="inline-flex items-center text-xs font-semibold tracking-wide text-blue-400 transition-colors hover:text-blue-300"
+				>
+					<span>Explore Service Details</span>
+					<ArrowUpRight className="ml-1 h-3.5 w-3.5" />
+				</Link>
+			</div>
+		</div>
 	);
 };

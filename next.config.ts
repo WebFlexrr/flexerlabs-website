@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
 			{
 				protocol: "https",
 				hostname: "cdn.sanity.io",
-				pathname: `/images/**`,
 			},
 			{
 				protocol: "https",
@@ -15,10 +14,10 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "images.unsplash.com",
+				hostname: "i.pravatar.cc",
 			},
 		],
 	},
 };
 
-module.exports = nextConfig;
+export default nextConfig;

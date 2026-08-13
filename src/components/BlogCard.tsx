@@ -1,13 +1,8 @@
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from "@/components/ui/card";
-import { CalendarDays, Clock, User } from "lucide-react";
+"use client";
+import React from "react";
+import { CalendarDays, Clock, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Separator } from "./ui/separator";
 
 interface BlogCardProps {
 	image: string;
@@ -26,110 +21,74 @@ const BlogCard = ({
 	description,
 	slug,
 	date,
-	category,
-	avgReadingTime,
-	authorName,
+	category = "Engineering",
+	avgReadingTime = 4,
+	// authorName = "Webflexrr Team",
 }: BlogCardProps) => {
 	return (
-		<Card className="group hover:shadow-secondary/20 dark:from-primary/50 dark:to-primary-900/50 relative h-full justify-between overflow-hidden border-none bg-gradient-to-br from-white/10 to-white/5 pt-0 pb-8 shadow-lg backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-			{/* Subtle gradient overlay */}
-			{/* <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-700/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div> */}
+		<div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/80 hover:shadow-2xl hover:shadow-blue-500/10">
+			{/* Top Image */}
+			<div>
+				<Link
+					href={`/blogs/${slug}`}
+					className="relative block aspect-[16/10] w-full overflow-hidden bg-slate-950"
+				>
+					<Image
+						src={image || "/assets/background-home-2.jpg"}
+						alt={title ?? "Blog post thumbnail"}
+						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						className="object-cover transition-transform duration-500 group-hover:scale-105"
+					/>
+					<div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
 
-			<CardHeader className="p-0">
-				{/* Image Container */}
-				<Link href={`/blogs/${slug}`}>
-					<div className="rounded-x-lg relative w-full overflow-hidden">
-						<Image
-							src={image}
-							alt={title ?? ""}
-							width={1000}
-							height={0}
-							className="aspect-[16/9] w-full transition-transform duration-500 group-hover:scale-105"
-						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-						{/* Date Badge */}
-						<section className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/30 px-3 py-1 text-xs backdrop-blur-md">
-							<CalendarDays className="h-4 w-4 text-purple-200" />
-							{category}
-						</section>
-					</div>
-				</Link>
-			</CardHeader>
-
-			{/* Content */}
-			<section className="flex h-full w-full flex-col justify-between">
-				<CardContent className="relative space-y-2">
-					{/* Category Tag
-				<div className="flex gap-2">
-					<span className="bg-primary-500/10 inline-block rounded-full px-3 py-1 text-xs font-medium text-purple-300">
+					{/* Category Badge */}
+					<span className="absolute top-3.5 left-3.5 rounded-full border border-white/20 bg-slate-950/70 px-3 py-1 text-xs font-semibold text-blue-300 backdrop-blur-md">
 						{category}
 					</span>
-				</div> */}
+				</Link>
 
-					{/* Title */}
-					<Link href={`/blogs/${slug}`}>
-						<h5 className="line-clamp-2 text-left font-bold text-white transition-colors group-hover:text-purple-200">
+				{/* Body Content */}
+				<div className="space-y-3 p-6">
+					<div className="flex items-center gap-3 text-xs text-slate-400">
+						<span className="flex items-center gap-1.5">
+							<CalendarDays className="h-3.5 w-3.5 text-blue-400" />
+							{new Date(date).toLocaleDateString("en-US", {
+								month: "short",
+								day: "numeric",
+								year: "numeric",
+							})}
+						</span>
+						<span>•</span>
+						<span className="flex items-center gap-1.5">
+							<Clock className="h-3.5 w-3.5 text-blue-400" />
+							{avgReadingTime} min read
+						</span>
+					</div>
+
+					<Link href={`/blogs/${slug}`} className="block">
+						<h3 className="line-clamp-2 text-lg font-bold text-white transition-colors group-hover:text-blue-300">
 							{title}
-						</h5>
+						</h3>
 					</Link>
 
-					{/* Description */}
-					<p className="line-clamp-2 text-sm text-gray-300/80">{description}</p>
-					{/* 
-				{/* Read More Link 
-				<div className="pt-4">
-					<Link
-						href={`/blogs/${slug}`}
-						className="inline-flex items-center text-sm font-medium text-purple-300 transition-colors group-hover:text-purple-200"
-					>
-						Read Article
-						<svg
-							className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M17 8l4 4m0 0l-4 4m4-4H3"
-							/>
-						</svg>
-					</Link>
-				</div> */}
-				</CardContent>
+					<p className="line-clamp-2 text-sm leading-relaxed text-slate-300">
+						{description}
+					</p>
+				</div>
+			</div>
 
-				<CardFooter className="flex flex-col gap-4">
-					<Separator />
-					<section className="flex w-full justify-between">
-						<section className="flex items-center gap-2">
-							<CalendarDays className="h-4 w-4 text-purple-200" />
-							<div className="text-sm font-medium text-purple-100">
-								{new Date(date).toLocaleDateString("en-IN", {
-									month: "short",
-									day: "numeric",
-								})}
-							</div>
-						</section>
-
-						<section className="flex items-center gap-2 text-sm">
-							<Clock size={15} />
-							{avgReadingTime} min
-						</section>
-					</section>
-					<section className="flex w-full justify-between text-sm">
-						<section className="flex items-center gap-2">
-							<User size={15} /> {authorName}
-						</section>
-						<section className="text-blue-400">
-							<Link href={`/blogs/${slug}`}>Read more</Link>
-						</section>
-					</section>
-				</CardFooter>
-			</section>
-		</Card>
+			{/* Footer Link */}
+			<div className="mt-2 border-t border-white/5 p-6 pt-0">
+				<Link
+					href={`/blogs/${slug}`}
+					className="inline-flex items-center text-xs font-semibold text-blue-400 transition-colors group-hover:text-blue-300"
+				>
+					<span>Read Full Article</span>
+					<ArrowUpRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+				</Link>
+			</div>
+		</div>
 	);
 };
 
